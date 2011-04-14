@@ -7,27 +7,23 @@
 
 
 #include "datetime.h"
+#include "journal.h"
 
 std::string trim(std::string);
 
 int main(int argc, char **argv) {
 		DateTime dt;
+		Journal journal;
 
+		if (!journal.openFile()) {
+				exit(1);
+		}
+		
 		std::string line;
-		std::ofstream journalFile;
 
 		// content is first appended here for checking empty contents etc.
 		std::stringstream contents;
-		
-		std::stringstream filename;
-		filename << std::getenv("HOME") << "/" << ".journal";
-		
-		journalFile.open(filename.str().c_str(), std::ios::app);
-		
-		if (! journalFile.is_open()) {
-				std::cout << "cannot open file :: " << strerror(errno) << "\n";
-				exit(1);
-		}
+	
 		while (! std::cin.eof()) {
 				std::getline(std::cin, line);
 				contents << line <<"\n";
@@ -38,11 +34,10 @@ int main(int argc, char **argv) {
 
 		// write to file only if content is not totally blank
 		if (!cc.empty()) {
-				journalFile << "++" << dt.getCurrentDateTime() << "++" << "\n";
-				journalFile << cc << "\n";
-				journalFile << std::string(80, '-') << "\n\n";
+				journal.file() << "++" << dt.getCurrentDateTime() << "++" << "\n";
+				journal.file() << cc << "\n";
+				journal.file() << std::string(80, '-') << "\n\n";
 		}
-		journalFile.close();
 		return 0;
 }
 
