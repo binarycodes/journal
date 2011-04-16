@@ -1,17 +1,27 @@
+#ifndef _JOURNAL_H
+#define _JOURNAL_H
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
 
+#include "note.h"
+
+
 class Journal {
+ public:
+  Journal();
+  ~Journal();
+  
+  void takeNote(const std::string);
+  void saveNote();
+  
+ private:
+  bool openFile();
 
-public:
-		Journal();
-		~Journal();
-
-		bool openFile();
-		std::ofstream& file();
-
-private:
-		std::ofstream journalFile;
-		std::stringstream filename;
+  std::ofstream journalFile;
+  std::stringstream filename;
+  Note *note;
 };
+
+#endif

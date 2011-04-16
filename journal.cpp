@@ -3,9 +3,25 @@
 #include <cstdlib>
 
 #include "journal.h"
+#include "note.h"
 
 Journal::Journal() {
 		filename << std::getenv("XDG_DATA_HOME") << "/" << "journal";
+		note = NULL;
+}
+
+void Journal::takeNote(const std::string str) {
+  note = new Note(str);
+}
+
+void Journal::saveNote() {
+  if (note != NULL) {
+	openFile();
+	journalFile << "++" << note->timestamp() << "++" << "\n";
+	journalFile << note->content() << "\n";
+	journalFile << std::string(80, '-') << "\n\n";
+	journalFile.close();
+  }
 }
 
 bool Journal::openFile() {
@@ -18,12 +34,14 @@ bool Journal::openFile() {
 		}
 }
 
-std::ofstream& Journal::file() {
-		return journalFile;
-}
 
 Journal::~Journal() {
-		if (journalFile.is_open()) {
-				journalFile.close();
-		}
+  if (journalFile.is_open()) {
+	journalFile.close();
+  }
+  if (note != NULL) {
+	delete note;
+  }
 }
+
+

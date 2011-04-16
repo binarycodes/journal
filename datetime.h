@@ -1,3 +1,6 @@
+#ifndef _DATETIME_H
+#define _DATETIME_H
+
 #include <ctime>
 
 class DateTime {
@@ -8,3 +11,5 @@ public:
 		std::string getCurrentDateTime();
 };
 
+
+#endif
