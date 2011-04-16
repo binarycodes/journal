@@ -8,8 +8,8 @@
 
 #include "datetime.h"
 #include "journal.h"
+#include "utility.h"
 
-std::string trim(std::string);
 
 int main(int argc, char **argv) {
 		DateTime dt;
@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 		}
 
 		// remove beginning and trailing whitespaces with custom function
-		std::string cc = trim(contents.str());
+		std::string cc = Utility::trim(contents.str());
 
 		// write to file only if content is not totally blank
 		if (!cc.empty()) {
@@ -39,26 +39,4 @@ int main(int argc, char **argv) {
 				journal.file() << std::string(80, '-') << "\n\n";
 		}
 		return 0;
-}
-
-
-std::string trim(std::string str) {
-		std::string whitespaces (" \t\f\v\n\r");
-		size_t found;
-		
-		found = str.find_last_not_of(whitespaces);
-		if (found != std::string::npos) {
-				str.erase(found+1);
-		} else {
-				str.clear();
-		}
-		
-		found = str.find_first_not_of(whitespaces);
-		if (found != std::string::npos) {
-				str.erase(0,found);
-		} else {
-				str.clear();
-		}
-		
-		return str;
 }
