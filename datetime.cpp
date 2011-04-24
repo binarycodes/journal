@@ -12,7 +12,7 @@ DateTime::DateTime() {
 
 std::string DateTime::getCurrentDateTime() {
 		char ts[30];
-		strftime(ts,200,"%d/%m/%Y @ %H:%M:%S",timeinfo);
+		strftime(ts,200,"%d/%m/%Y-%H:%M:%S",timeinfo);
 		std::string timeString(ts);
 		return timeString;
 }

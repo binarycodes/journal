@@ -17,7 +17,7 @@ void Journal::takeNote(const std::string str) {
 void Journal::saveNote() {
   if (note != NULL) {
 	openFile();
-	journalFile << "++" << note->timestamp() << "++" << "\n";
+	journalFile << ">> " << note->timestamp() << "\n\n";
 	journalFile << note->content() << "\n";
 	journalFile << std::string(80, '-') << "\n\n";
 	journalFile.close();
@@ -43,5 +43,3 @@ Journal::~Journal() {
 	delete note;
   }
 }
-
-
