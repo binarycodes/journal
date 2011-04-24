@@ -1,10 +1,11 @@
 CC=g++
 CFLAGS=-c -Wall -pedantic -pedantic-errors
+LINKER = -lboost_program_options
 
 all: journal
 
-journal: main.o datetime.o journal.o utility.o note.o cinterface.o
-	$(CC) -o $@ $^
+journal: main.o datetime.o journal.o utility.o note.o cinterface.o optionparser.o
+	$(CC) -o $@ $^ $(LINKER)
 
 main.o: main.cpp datetime.h journal.h
 	$(CC) $(CFLAGS) -o $@ $<
@@ -23,6 +24,10 @@ note.o: note.cpp note.h datetime.h
 
 cinterface.o: cinterface.cpp cinterface.h
 	$(CC) $(CFLAGS) -o $@ $<
+
+optionparser.o: optionparser.cpp optionparser.h
+	$(CC) $(CFLAGS) -o $@ $<
+
 
 .PHONY: clean
 

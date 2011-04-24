@@ -6,8 +6,8 @@
 #include "note.h"
 
 Journal::Journal() {
-		filename << std::getenv("XDG_DATA_HOME") << "/" << "journal";
-		note = NULL;
+	filename << std::getenv("XDG_DATA_HOME") << "/" << "journal";
+	note = NULL;
 }
 
 void Journal::takeNote(const std::string str) {
