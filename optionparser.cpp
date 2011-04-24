@@ -3,9 +3,10 @@
 
 #include "optionparser.h"
 
-OptionParser::OptionParser(const int & ac, const char **&av)
+OptionParser::OptionParser(const int & ac, const char **&av, std::stringstream & ss)
  :general("General Options") {
 	addOptionsToParser();
+	ss << general << "\n";
 	po::store(po::parse_command_line(ac, av, general), vm);
 	po::notify(vm);
 }
@@ -18,7 +19,7 @@ OptionParser::~OptionParser() {
 void OptionParser::addOptionsToParser() {
 	general.add_options()
 		("help,h", "show help message")
-		("version,v", "show the version")
+		("readline,r", "use the GNU readline library")
 		("append,a", po::value< std::vector <std::string> >(&linedata)->multitoken(), "append the rest of the arguments to the journal")
 		;
 }
@@ -26,8 +27,10 @@ void OptionParser::addOptionsToParser() {
 
 const int OptionParser::processOptions(std::string & cc) {
 	
-	int i=showHelp();
-	if (i==2) {return i;}
+	if (vm.count("help")) {
+		std::cout << general << "\n";
+		return 2;
+	}
 	
 	if (vm.count("append")) {
 		std::stringstream ss;
@@ -38,15 +41,6 @@ const int OptionParser::processOptions(std::string & cc) {
 		cc = ss.str();
 		return 1;
 	}
-	
 	return 0;
 }
 
-
-const int OptionParser::showHelp() {
-	if (vm.count("help")) {
-		std::cout << general << "\n";
-		return 2;
-	}
-	return 0;
-}

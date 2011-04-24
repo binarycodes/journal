@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall -pedantic -pedantic-errors
-LINKER = -lboost_program_options
+LINKER = -lboost_program_options -lreadline
 
 all: journal
 

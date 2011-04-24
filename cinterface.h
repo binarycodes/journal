@@ -6,7 +6,7 @@ public:
 	CInterface();
 	~CInterface();
 	
-	std::string getUserInput();
+	std::string getUserInput(const bool);
 private:
 	std::string prompt;
 

@@ -9,11 +9,10 @@ namespace po = boost::program_options;
 class OptionParser {
 
 public:
-	OptionParser(const int &, const char **&);
+	OptionParser(const int &, const char **&, std::stringstream &);
 	~OptionParser();
 	
 	const int processOptions(std::string &);
-	const int showHelp();
 	
 	po::variables_map vm;
 	po::options_description general;

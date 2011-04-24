@@ -1,5 +1,6 @@
 General Options:
   -h [ --help ]         show help message
-  -v [ --version ]      show the version
+  -r [ --readline ]     use the GNU readline library
   -a [ --append ] arg   append the rest of the arguments to the journal
+
 
