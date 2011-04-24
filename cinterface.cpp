@@ -3,8 +3,8 @@
 
 #include "cinterface.h"
 
-CInterface::CInterface() {
-	prompt = ">> ";
+CInterface::CInterface()
+	:prompt(">> ") {
 }
 
 std::string CInterface::getPrompt() {
@@ -15,7 +15,7 @@ CInterface::~CInterface() {
 }
 
 std::string CInterface::getUserInput() {
-	// content is first appended here for checking empty contents etc.
+	// content is first appended here
 	std::stringstream contents;
 	std::string line;
 
