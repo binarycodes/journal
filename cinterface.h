@@ -9,6 +9,7 @@ public:
 	std::string getUserInput();
 private:
 	std::string prompt;
+
 	std::string getPrompt();
 };
 
