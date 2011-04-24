@@ -3,7 +3,7 @@ CFLAGS=-c -Wall -pedantic -pedantic-errors
 
 all: journal
 
-journal: main.o datetime.o journal.o utility.o note.o
+journal: main.o datetime.o journal.o utility.o note.o cinterface.o
 	$(CC) -o $@ $^
 
 main.o: main.cpp datetime.h journal.h
@@ -21,6 +21,8 @@ utility.o: utility.cpp utility.h
 note.o: note.cpp note.h datetime.h
 	$(CC) $(CFLAGS) -o $@ $<
 
+cinterface.o: cinterface.cpp cinterface.h
+	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: clean
 
