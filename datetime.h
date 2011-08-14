@@ -6,9 +6,10 @@
 class DateTime {
 		time_t rawtime;
 		struct tm *timeinfo;
+
 public:
 		DateTime();
-		std::string getCurrentDateTime();
+		std::string getCurrentDateTime(const std::string);
 };
 
 

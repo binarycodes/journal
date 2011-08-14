@@ -14,36 +14,56 @@
 
 
 int main(const int argc, const char **argv) {
-	CInterface ci;
-	std::stringstream usage;
-	std::string cc = "";
-	
-	try {
-		OptionParser op(argc, argv, usage);
-		
-		int rval = op.processOptions(cc);
-		
-		if (rval == 0) {
-			// fetch user input from the interfacing code9
-			cc = ci.getUserInput(op.vm.count("readline"));
-		} else if (rval == 2) {
-			return 0;
+
+    std::stringstream usage;
+    std::string cc = "";
+
+    // hash map for fetching options data
+    options_map op_data;
+
+    try {
+        // process command line arguments and 'usage' should contain
+        // the usage message.
+        OptionParser op(argc, argv, usage);
+
+        int rval = op.processOptions(op_data);
+
+        if (rval == 0) {
+            // fetch user input from the interfacing code
+            CInterface ci;
+
+            // yes means load readline support
+            cc = ci.getUserInput(op_data["r"]=="yes");
+        } else if (rval == 2) {
+            std::cout << usage.str();
+            return 0;
+        }
+
+    } catch (po::error e) {
+        std::cout << "Invalid options passed ...\n";
+        std::cout << usage.str();
+        return 1;
+    }
+
+
+    // add data meant to be appended to the beginning
+    cc = op_data["a"]+"\n"+cc;
+
+    // remove beginning and trailing whitespaces with custom function
+    cc = Utility::trim(cc);
+
+    // write to file only if content is not totally blank
+    if (!cc.empty()) {
+        Journal journal;
+        journal.takeNote(cc);
+
+		std::string dateformat = op_data["d"];
+		if(dateformat.begin()==dateformat.end()) {
+			dateformat="%d/%m/%Y-%H:%M:%S";
 		}
-		
-	} catch (po::error e) {
-		std::cout << usage.str() << "\n";
-		return 1;
-	}
-	
-		
-  	// remove beginning and trailing whitespaces with custom function
-	cc = Utility::trim(cc);
-	
-	// write to file only if content is not totally blank
-	if (!cc.empty()) {
-		Journal journal;
-		journal.takeNote(cc);
-		journal.saveNote();
-	}
-	return 0;
+
+        journal.saveNote(dateformat);
+    }
+
+    return 0;
 }

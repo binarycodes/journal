@@ -15,8 +15,8 @@ Note::~Note() {
 }
 
 
-std::string Note::timestamp() {
-  return dt->getCurrentDateTime();
+std::string Note::timestamp(const std::string dtfmt) {
+  return dt->getCurrentDateTime(dtfmt);
 }
 
 std::string Note::content() {

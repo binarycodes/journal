@@ -1,6 +1,7 @@
 General Options:
   -h [ --help ]         show help message
   -r [ --readline ]     use the GNU readline library
+  -d [ --datefmt ] arg  specify dateformat as per strftime specs, default is 
+                        %d/%m/%Y-%H:%M:%S
   -a [ --append ] arg   append the rest of the arguments to the journal
-
 

@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "optionparser.h"
+#include "utility.h"
+#include "datetime.h"
 
 OptionParser::OptionParser(const int & ac, const char **&av, std::stringstream & ss)
  :general("General Options") {
@@ -16,21 +18,27 @@ OptionParser::~OptionParser() {
 }
 
 
+// setup and configure parameter types for command line options
 void OptionParser::addOptionsToParser() {
 	general.add_options()
 		("help,h", "show help message")
 		("readline,r", "use the GNU readline library")
+		("datefmt,d",po::value<std::string>(&dateformat),"specify dateformat as per strftime specs, default is %d/%m/%Y-%H:%M:%S")
 		("append,a", po::value< std::vector <std::string> >(&linedata)->multitoken(), "append the rest of the arguments to the journal")
 		;
 }
 
 
-const int OptionParser::processOptions(std::string & cc) {
+const int OptionParser::processOptions(options_map & data) {
 	
 	if (vm.count("help")) {
-		std::cout << general << "\n";
 		return 2;
 	}
+	
+	if (vm.count("readline")) {
+		data["r"]="yes";
+	}
+
 	
 	if (vm.count("append")) {
 		std::stringstream ss;
@@ -38,9 +46,12 @@ const int OptionParser::processOptions(std::string & cc) {
 			ss << linedata[i] << " ";
 		}
 		ss << "\n";
-		cc = ss.str();
-		return 1;
+		data["a"] = ss.str();
 	}
+	
+	if(vm.count("datefmt")){
+		data["d"]=dateformat;
+	}
+	
 	return 0;
 }
-

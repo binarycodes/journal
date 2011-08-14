@@ -13,7 +13,7 @@ class Note {
   Note(std::string);
   ~Note();
 
-  std::string timestamp();
+  std::string timestamp(const std::string);
   std::string content();  
 };
 

@@ -14,7 +14,7 @@ class Journal {
   ~Journal();
   
   void takeNote(const std::string);
-  void saveNote();
+  void saveNote(const std::string);
   
  private:
   bool openFile();
