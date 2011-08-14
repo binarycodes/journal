@@ -2,8 +2,7 @@
 #include <iostream>
 
 #include "optionparser.h"
-#include "utility.h"
-#include "datetime.h"
+
 
 OptionParser::OptionParser(const int & ac, const char **&av, std::stringstream & ss)
  :general("General Options") {
@@ -23,8 +22,10 @@ void OptionParser::addOptionsToParser() {
 	general.add_options()
 		("help,h", "show help message")
 		("readline,r", "use the GNU readline library")
-		("datefmt,d",po::value<std::string>(&dateformat),"specify dateformat as per strftime specs, default is %d/%m/%Y-%H:%M:%S")
-		("append,a", po::value< std::vector <std::string> >(&linedata)->multitoken(), "append the rest of the arguments to the journal")
+		("datefmt,d",po::value<std::string>(&dateformat),
+		 "specify dateformat as per strftime specs, default is %d/%m/%Y-%H:%M:%S")
+		("append,a", po::value< std::vector <std::string> >(&linedata)->multitoken(),
+		 "append the rest of the arguments to the journal")
 		;
 }
 

@@ -2,11 +2,12 @@
 #define _OPTIONPARSER_H
 
 #include <boost/program_options.hpp>
+#include <boost/unordered_map.hpp>
 #include <iostream>
 
-#include "utility.h"
-
 namespace po = boost::program_options;
+typedef boost::unordered_map<std::string, std::string> options_map;
+
 
 class OptionParser {
 
