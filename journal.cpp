@@ -6,7 +6,13 @@
 #include "note.h"
 
 Journal::Journal() {
-    filename << std::getenv("XDG_DATA_HOME") << "/" << "journal";
+    if (std::getenv("XDG_DATA_HOME") == NULL) {
+        filename << std::getenv("HOME") << "/" << ".journal";
+    }
+    else {
+        filename << std::getenv("XDG_DATA_HOME") << "/" << "journal";
+    }
+
     note = NULL;
 }
 
